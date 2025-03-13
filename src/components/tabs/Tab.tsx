@@ -2,7 +2,7 @@
 
 const Tab: React.FC = () => {
     return (
-        <div>Tab</div>
+        <div>Tab components</div>
     )
 }
 
