@@ -14,7 +14,7 @@ function App() {
   return (
     <ErrorBoundary>
       <Provider store={store} >
-        <MantineProvider>
+        <MantineProvider defaultColorScheme='light'>
           <QueryClientProvider client={queryClient}>
             <RoutAppp />
           </QueryClientProvider>
