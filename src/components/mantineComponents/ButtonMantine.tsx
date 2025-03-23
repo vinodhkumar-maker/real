@@ -3,7 +3,7 @@ import { Button, MantineSize } from "@mantine/core"
 interface ButtonMaintineProps {
     children: React.ReactNode;
     color?: string;
-    variant: "filled" | "outline" | "light" | "subtle" | "white" | "default" | "gradient"; // ✅ Specific variants
+    variant: "filled" | "outline" | "light" | "subtle" | "white" | "default" | "gradient";
     disabled?: boolean;
     fullWidth?: boolean;
     gradient?: { from: string; to: string; deg?: number };

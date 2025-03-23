@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { CartArray, Product, ProductArray } from './apiType';
+import { CartArray, Product, ProductArray, userData, UserInformation } from './apiType';
 
 interface FetchProductsResponse {
   data: ProductArray[];
@@ -44,7 +44,20 @@ export const useFetchCart = () => {
       return data
     }
   })
-}
+};
+export const useUserInformation = () => {
+  return useQuery({
+    queryKey: ['users'],
+    queryFn: async (): Promise<UserInformation[]> => {
+      return new Promise<UserInformation[]>((resolve) => {
+        setTimeout(() => {
+          resolve(userData);
+        }, 1000); 
+      });
+    },
+    
+  });
+};
 
 
 
