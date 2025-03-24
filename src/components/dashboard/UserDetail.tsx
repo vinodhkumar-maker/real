@@ -5,32 +5,29 @@ import { AppDispatch } from '../../slice/store';
 import UserInfo from './UserInfo';
 import { fetchProductData } from '../../slice/productSlice';
 
-
-
 const UserDetail: React.FC = () => {
-    const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
 
+  // const fetchDataProuct = async () => {
+  //     const url = "https://fakestoreapi.com/products?limit=5"
+  //     const res = await fetch(url)
+  //     console.log('res', res.body)
+  //     console.log('data', await res.json())
 
-    // const fetchDataProuct = async () => {
-    //     const url = "https://fakestoreapi.com/products?limit=5"
-    //     const res = await fetch(url)
-    //     console.log('res', res.body)
-    //     console.log('data', await res.json())
+  // }
 
-    // }
+  useEffect(() => {
+    // dispatch(fetchProductData());
 
-    useEffect(() => {
-        // dispatch(fetchProductData());
+    // fetchDataProuct()
+    dispatch(fetchProductData());
+  }, [dispatch]);
 
-        // fetchDataProuct()
-        dispatch(fetchProductData())
-    }, [dispatch]);
-
-    return (
-        <div>
-            <UserInfo />
-        </div>
-    );
+  return (
+    <div>
+      <UserInfo />
+    </div>
+  );
 };
 
 export default UserDetail;

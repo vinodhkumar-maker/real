@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
 
 export const fetchProducts = async (
   page: number,
-  pageSize: number
+  pageSize: number,
 ): Promise<FetchProductsResponse> => {
   const response = await axiosInstance.get<[Product][]>('/products', {
     params: {
@@ -32,18 +32,17 @@ export const useProducts = (page: number, pageSize: number) => {
   });
 };
 
-
 const baseURL = 'https://fakestoreapi.com/carts/5';
 
 export const useFetchCart = () => {
   return useQuery({
     queryKey: ['cart'],
     queryFn: async (): Promise<CartArray> => {
-      const res = await fetch(baseURL)
-      const data = await res.json()
-      return data
-    }
-  })
+      const res = await fetch(baseURL);
+      const data = await res.json();
+      return data;
+    },
+  });
 };
 export const useUserInformation = () => {
   return useQuery({
@@ -52,13 +51,8 @@ export const useUserInformation = () => {
       return new Promise<UserInformation[]>((resolve) => {
         setTimeout(() => {
           resolve(userData);
-        }, 1000); 
+        }, 1000);
       });
     },
-    
   });
 };
-
-
-
-
