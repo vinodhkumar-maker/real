@@ -12,7 +12,7 @@ interface PasswordInputMantineProps {
   size?: string;
   radius?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
+  value?: string;
   leftSection?: React.ReactNode;
   rightSection?: React.ReactNode;
   icon?: React.ReactNode;

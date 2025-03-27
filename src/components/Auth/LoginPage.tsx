@@ -1,78 +1,96 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Notification, TextInput } from '@mantine/core';
 import { useState } from 'react';
-import { TextInput } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 import ZenButton from '../button/ZenButton';
+import { useNavigate } from 'react-router-dom';
 
-interface authData {
-  name: string;
-  email: string;
-  password: string;
-}
+const schema = z.object({
+  email: z.string().email('Enter a valid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+});
 
-function LoginPage() {
+type FormValues = z.infer<typeof schema>;
+
+const LoginPage: React.FC = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    resolver: zodResolver(schema),
+    mode: 'onBlur',
+  });
+
   const navigate = useNavigate();
+  const [showNotification, setShowNotification] = useState(false);
 
-  const defaultAuthData: authData = {
-    name: 'vinodh',
-    email: 'vinodh@gmail.com',
-    password: 'P@ssw0rd',
-  };
+  const onSubmit = async (data: FormValues) => {
+    console.log('Submitted Data:', data);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  const [authName, setAuthName] = useState<string>('');
-  const [authPassword, setAuthPassword] = useState<string>('');
-  const [localError, setLocalError] = useState<string | null>(null);
+    const storeData: FormValues = {
+      email: 'vinodh@gmail.com',
+      password: 'P@ssw0rd',
+    };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const showNavigatePage =
-      (defaultAuthData.name === authName || defaultAuthData.email === authName) &&
-      defaultAuthData.password === authPassword;
+    const nextpage = data.email === storeData.email && data.password === storeData.password;
 
-    if (showNavigatePage) {
-      navigate('/mainPage');
-    } else {
-      setLocalError('Invalid username, email, or password!');
+    reset();
+    setShowNotification(true);
+
+    if (nextpage) {
+      setTimeout(() => navigate('/modalcontainer'), 2000);
     }
+    setTimeout(() => setShowNotification(false), 3000);
   };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-200">
+      <div className="absolute top-4 right-4">
+        {showNotification && (
+          <Notification title="Your data was submitted successfully" color="green">
+            <p>Thank you for submitting your data</p>
+          </Notification>
+        )}
+      </div>
+
       <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 w-[400px] rounded-xl bg-gray-400 shadow-lg p-6"
+        className="flex flex-col gap-4 w-[400px] rounded-xl bg-white shadow-lg px-6 py-8 hover:shadow-red-400"
+        onSubmit={handleSubmit(onSubmit)}
       >
-        <span className="text-white font-semibold text-center text-xl">Enter User Details</span>
+        <TextInput
+          {...register('email')}
+          label="Email"
+          placeholder="Enter Email"
+          variant="filled"
+          error={errors.email?.message}
+        />
 
         <TextInput
-          label="User Name"
-          type="text"
-          placeholder="Enter name or Email Address"
-          withAsterisk
-          value={authName}
-          onChange={(e) => setAuthName(e.target.value)}
-        />
-        <TextInput
+          {...register('password')}
           label="Password"
-          type="password"
           placeholder="Enter Password"
-          withAsterisk
-          value={authPassword}
-          onChange={(e) => setAuthPassword(e.target.value)}
+          variant="filled"
+          type="password"
+          error={errors.password?.message}
         />
 
-        {localError && <p className="text-red-500 text-center">{localError}</p>}
-
-        <div className="flex justify-center">
-          <ZenButton
-            label="Login"
-            textSize="lg"
-            className="w-1/3 shadow shadow-blue-300 hover:bg-blue-600"
-            type="submit"
-          />
-        </div>
+        <ZenButton
+          label={isSubmitting ? 'Submitting...' : 'Submit'}
+          type="submit"
+          variant="primary"
+          disabled={isSubmitting}
+        />
       </form>
     </div>
   );
-}
+};
 
 export default LoginPage;
