@@ -1,1 +1,91 @@
 @import 'tailwindcss';
+
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --whiteSmoke: #f7f4f3;
+  --wine: #5b2333;
+  --robinEggBlue: #50c9ce;
+  --blackOlive: #2e382e;
+  --persianPink: #f991cc;
+  --lavenderPink: #ffdafc;
+  --chinaRose: #b24c63;
+  --palatinate: #5438dc;
+  --platinum: #e2f3f4;
+  --photoBlue: #6dc7d1;
+  --lightYellow: #f8ffe5;
+  --emerald: #06d6a0;
+  --desertSand: #f87060;
+  --blue: #0b4596;
+  --darkBlue: #102542;
+  --snow: #fcf7f8;
+  --madder: #a31621;
+  --bora: #eaecc6;
+  --skyLine: #2bc0e4;
+  --gray: #928dab;
+  --steelGray: #1f1c2c;
+  --chartreuse: #e0ff4f;
+  --gunMetal: #00272b;
+  --eggShell: #f4f1de;
+  --burntSienna: #e07a5f;
+  --pumpkin: #fe7f2d;
+  --charcoal: #233d4d;
+  --ecru: #e1bb80;
+  --bistre: #352208;
+  --xanthous: #f7b538;
+  --burgundy: #780116;
+  --navy: #050e3d;
+  --primaryBlue: #3b82f6;
+
+  --font-indie-flower: 'Indie Flower', cursive;
+  --font-kaushan-script: 'Kaushan Script', cursive;
+  --font-caveat: 'Caveat', cursive;
+}
+
+@theme inline {
+  --color-white: var(--white);
+  --color-black: var(--black);
+  --color-whiteSmoke: var(--whiteSmoke);
+  --color-wine: var(--wine);
+  --color-robinEggBlue: var(--robinEggBlue);
+  --color-blackOlive: var(--blackOlive);
+  --color-persianPink: var(--persianPink);
+  --color-lavenderPink: var(--lavenderPink);
+  --color-chinaRose: var(--chinaRose);
+  --color-palatinate: var(--palatinate);
+  --color-platinum: var(--platinum);
+  --color-photoBlue: var(--photoBlue);
+  --color-lightYellow: var(--lightYellow);
+  --color-emerald: var(--emerald);
+  --color-desertSand: var(--desertSand);
+  --color-blue: var(--blue);
+  --color-darkBlue: var(--darkBlue);
+  --color-snow: var(--snow);
+  --color-madder: var(--madder);
+  --color-bora: var(--bora);
+  --color-skyLine: var(--skyLine);
+  --color-gray: var(--gray);
+  --color-steelGray: var(--steelGray);
+  --color-chartreuse: var(--chartreuse);
+  --color-gunMetal: var(--gunMetal);
+  --color-eggShell: var(--eggShell);
+  --color-burntSienna: var(--burntSienna);
+  --color-pumpkin: var(--pumpkin);
+  --color-charcoal: var(--charcoal);
+  --color-ecru: var(--ecru);
+  --color-bistre: var(--bistre);
+  --color-xanthous: var(--xanthous);
+  --color-navy: var(--navy);
+  --color-primaryBlue: var(--primaryBlue);
+
+  --font-kaushan-script: var(--font-kaushan-script);
+  --font-indie-flower: var(--font-indie-flower);
+  --font-caveat: var(--font-caveat);
+  --font-serif: var(--font-geist-serif);
+}
+
+body {
+  background: var(--white);
+  color: var(--navy);
+  font-family: var(--font-kaushan-script), cursive;
+}

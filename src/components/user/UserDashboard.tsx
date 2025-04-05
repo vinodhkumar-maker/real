@@ -1,13 +1,12 @@
-import { AppShell } from '@mantine/core';
+import { AppShell, Loader } from '@mantine/core';
 import UserSidebar from './UserSidebar';
 import { useUserInformation } from '../../querys';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UserDetail, UserInformation } from '../../apiType';
 import UserInformationDetails from './UserInformationDetails';
 
 const UserDashboard: React.FC = () => {
-  const { data: userData } = useUserInformation();
-
+  const { data: userData, isFetching } = useUserInformation();
   const [selectUser, setSelectUser] = useState<UserInformation[]>([]);
   const [savedUsers, setSavedUsers] = useState<UserDetail[]>([]);
   const [editingUserId, setEditingUserId] = useState<number | null>(null);
@@ -18,6 +17,11 @@ const UserDashboard: React.FC = () => {
     email: '',
     phone: '',
   });
+  useEffect(() => {
+    if (userData && userData.length > 0) {
+      setSelectUser([userData[0]]);
+    }
+  }, [userData]);
 
   const handleSave = (user: UserDetail) => {
     if (editingUserId) {
@@ -54,6 +58,7 @@ const UserDashboard: React.FC = () => {
         <AppShell.Navbar>
           <UserSidebar
             userInfo={userData}
+            isfetching={isFetching}
             selectInfo={selectUser}
             setSelectUserInfo={setSelectUser}
           />
@@ -89,13 +94,20 @@ const UserDashboard: React.FC = () => {
           <p className="text-center font-medium py-2 bg-slate-100 border-b border-slate-300">
             {editingUserId ? 'Edit User' : 'Add User'}
           </p>
-          <UserInformationDetails
-            formValues={formValues}
-            setFormValues={setFormValues}
-            saveFormValue={handleSave}
-            isEditing={editingUserId !== null}
-            onCancel={handleCancel}
-          />
+          {isFetching ? (
+            <div className="flex justify-center items-center h-full">
+              <Loader />
+            </div>
+          ) : (
+            <UserInformationDetails
+              selectInfo={selectUser}
+              formValues={formValues}
+              setFormValues={setFormValues}
+              saveFormValue={handleSave}
+              isEditing={editingUserId !== null}
+              onCancel={handleCancel}
+            />
+          )}
         </AppShell.Aside>
       </AppShell>
     </div>
