@@ -38,9 +38,9 @@ interface ZenButtonProps {
   type?: ZenButtonType;
   isFullWidth?: boolean;
   onClick?:
-  | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
-  | ((event: React.MouseEvent<HTMLElement>) => void)
-  | (() => void);
+    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
+    | ((event: React.MouseEvent<HTMLElement>) => void)
+    | (() => void);
   isSubmitting?: boolean;
   textSize?: ZenTextSize;
   className?: string;
