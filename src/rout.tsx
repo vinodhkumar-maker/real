@@ -6,6 +6,8 @@ import { ModalInput } from './components/DroganUpload/ModalInput';
 import MainPage from './components/layout/MainPage';
 import TableCard from './components/tables/TableCard';
 import UserDashboard from './components/user/UserDashboard';
+import Product from './components/layout/Product';
+import ProductDetails from './components/layout/ProductDetails';
 const ProductCart = lazy(() => import('./components/tables/ProductCart'));
 const RoutAppp: React.FC = () => {
   return (
@@ -19,6 +21,8 @@ const RoutAppp: React.FC = () => {
           <Route path={'/productcart'} element={<ProductCart />} />
           <Route path={'/userdashboard'} element={<UserDashboard />} />
           <Route path={'/modalcontainer'} element={<ModalInput />} />
+          <Route path={'/products'} element={<Product />} />
+          <Route path="/products/:productId" element={<ProductDetails />} />
         </Routes>
       </Router>
     </div>

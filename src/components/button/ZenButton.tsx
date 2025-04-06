@@ -13,6 +13,7 @@ export type ZenButtonVariant =
   | 'secondary-light-outline-thin'
   | 'success'
   | 'warning'
+  | 'warning-outline'
   | 'danger'
   | 'danger-outline'
   | 'primary-link'
@@ -21,7 +22,9 @@ export type ZenButtonVariant =
   | 'danger-link'
   | 'dark'
   | 'dark-outline'
-  | 'rounded-white';
+  | 'rounded-white'
+  | 'yellow'
+  | 'yellow-outline';
 
 export type ZenTextSize = 'sm' | 'md' | 'lg' | 'xl';
 
@@ -35,9 +38,9 @@ interface ZenButtonProps {
   type?: ZenButtonType;
   isFullWidth?: boolean;
   onClick?:
-    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
-    | ((event: React.MouseEvent<HTMLElement>) => void)
-    | (() => void);
+  | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
+  | ((event: React.MouseEvent<HTMLElement>) => void)
+  | (() => void);
   isSubmitting?: boolean;
   textSize?: ZenTextSize;
   className?: string;
@@ -77,7 +80,8 @@ const ZenButton: React.FC<ZenButtonProps> = ({
     'secondary-light-outline': 'border-slate-500 text-slate-500',
     'secondary-light-outline-thin': 'border-secondary text-secondary',
     success: 'bg-green-500 text-white',
-    warning: 'bg-orange-500 text-white',
+    warning: 'bg-orange-400 text-white hover:bg-orange-500',
+    'warning-outline': ' border border-orange-500 text-orange-500',
     danger: 'bg-red-500 text-white',
     'danger-outline': 'border-red-500 text-red-500',
     'primary-link': 'text-blue-500 underline',
@@ -87,8 +91,9 @@ const ZenButton: React.FC<ZenButtonProps> = ({
     dark: 'bg-black text-white',
     'dark-outline': 'border-black text-black',
     'rounded-white': 'bg-white text-black',
+    yellow: 'bg-yellow-400 text-white hover:bg-yellow-500',
+    'yellow-outline': ' border border-yellow-500 text-yellow-500',
   };
-
   const textSizeClassMap: Record<ZenTextSize, string> = {
     sm: 'text-sm',
     md: 'text-md',
