@@ -1,6 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { CartArray, Product, ProductArray, userData, UserInformation } from './apiType';
+import {
+  CartArray,
+  ProductCart,
+  ProductArray,
+  Products,
+  userData,
+  UserInformation,
+} from './apiType';
 
 interface FetchProductsResponse {
   data: ProductArray[];
@@ -15,7 +22,7 @@ export const fetchProducts = async (
   page: number,
   pageSize: number,
 ): Promise<FetchProductsResponse> => {
-  const response = await axiosInstance.get<[Product][]>('/products', {
+  const response = await axiosInstance.get<[ProductCart][]>('/products', {
     params: {
       _page: page,
       _limit: pageSize,
@@ -54,5 +61,29 @@ export const useUserInformation = () => {
         }, 1000);
       });
     },
+  });
+};
+
+export const useProductsList = () => {
+  return useQuery<Products[] | []>({
+    queryKey: ['products'],
+    queryFn: async () => {
+      const response = await fetch('https://fakestoreapi.com/products');
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    },
+  });
+};
+
+export const useProductDetails = (productId?: number) => {
+  return useQuery<Products>({
+    queryKey: ['products'],
+    queryFn: async () => {
+      const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    },
+    enabled: !!productId,
+    retry: false,
   });
 };

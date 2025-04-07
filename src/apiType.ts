@@ -1,4 +1,4 @@
-export interface Product {
+export interface ProductCart {
   id: number;
   title: string;
   price?: number;
@@ -7,7 +7,7 @@ export interface Product {
   image?: string;
 }
 
-export type ProductArray = Product[];
+export type ProductArray = ProductCart[];
 
 export interface CartTypes {
   id: string;

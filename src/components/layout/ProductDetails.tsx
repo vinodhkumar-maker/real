@@ -1,62 +1,30 @@
 import { faChevronRight, faLeftLong, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Products } from '../../apiType';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useProductDetails } from '../../querys';
 import ZenButton from '../button/ZenButton';
 
 const ProductDetails = () => {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
-  const [product, setProduct] = useState<Products | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [currentImage, setCurrentImage] = useState('');
 
-  useEffect(() => {
-    if (!productId) {
-      setError('Invalid product ID');
-      setLoading(false);
-      navigate('/products');
-      return;
-    }
+  const id = productId ? parseInt(productId, 10) : undefined;
 
-    const fetchProduct = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
+  const { data: product, isError, isLoading } = useProductDetails(id);
 
-        if (!response.ok) {
-          throw new Error(`Product with ID ${productId} not found`);
-        }
-
-        const data: Products = await response.json();
-        setProduct(data);
-        setCurrentImage(data.image);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An unknown error occurred');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [productId, navigate]);
-
-  if (loading)
+  if (isLoading)
     return (
       <div className="flex justify-center items-center h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
 
-  if (error)
+  if (isError)
     return (
       <div className="max-w-6xl mx-auto p-4">
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
           <h2 className="font-bold">Error</h2>
-          <p>{error}</p>
+          <p>{isError}</p>
           <ZenButton
             label="Back to previous page"
             type="button"
@@ -137,7 +105,7 @@ const ProductDetails = () => {
         <div className="lg:w-1/2">
           <div className="bg-gray-100 rounded-lg p-4 flex justify-center items-center h-96">
             <img
-              src={currentImage}
+              src={product.image}
               alt={product.title}
               className="max-h-full max-w-full object-contain mix-blend-multiply"
             />
@@ -163,9 +131,9 @@ const ProductDetails = () => {
           <h1 className="text-2xl font-bold text-gray-900 mb-2">{product.title}</h1>
 
           <div className="flex items-center mb-4">
-            <div className="flex mr-2">{renderStars(product.rating.rate)}</div>
+            <div className="flex mr-2">{product.rating && renderStars(product?.rating.rate)}</div>
             <span className="text-blue-600 text-sm font-medium ml-1">
-              {product.rating.rate} ({product.rating.count} reviews)
+              {product?.rating?.rate} ({product?.rating?.count} reviews)
             </span>
           </div>
 
